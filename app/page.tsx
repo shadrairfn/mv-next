@@ -1,69 +1,179 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
+import { Card } from "@/components/Card";
+import { Icon } from "@/components/Icon";
+import { SectionHeading } from "@/components/SectionHeading";
+import { WhatsAppIcon } from "@/components/WhatsAppIcon";
+import { images } from "@/lib/images";
 
-export default function Home() {
+const proofs = [
+  { icon: "shield", title: "Aman & Stabil", text: "Sistem siap untuk event penting." },
+  { icon: "monitor", title: "Live Multi-View", text: "Pantau beberapa area sekaligus." },
+  { icon: "camera", title: "4 / 8 / 16 Channel", text: "Fleksibel mengikuti skala venue." },
+] as const;
+
+const events = ["Wedding", "Birthday", "Wisuda", "Seminar", "Gathering", "Turnamen"];
+
+const reasons = [
+  {
+    icon: "shield",
+    title: "Keamanan lebih terjaga",
+    text: "Memantau pintu masuk, area utama, hingga jalur pergerakan tamu untuk meminimalkan blind spot selama acara berlangsung.",
+  },
+  {
+    icon: "camera",
+    title: "Dokumentasi visual yang rapi",
+    text: "Momen penting, aktivitas panggung, dan interaksi tamu dapat terekam sebagai arsip pendukung evaluasi maupun kebutuhan klien.",
+  },
+  {
+    icon: "wifi",
+    title: "Monitoring real-time",
+    text: "Penyelenggara dapat melihat kondisi acara secara langsung melalui monitor kontrol ataupun perangkat mobile tanpa harus selalu berada di lokasi inti.",
+  },
+] as const;
+
+const shortcuts = [
+  {
+    href: "/paket",
+    icon: "grid",
+    title: "Paket Rental",
+    text: "Bandingkan paket 4, 8, dan 16 channel untuk skala acara yang berbeda.",
+    note: "Klik untuk melihat detail paket →",
+  },
+  {
+    href: "/produk",
+    icon: "box",
+    title: "Produk & Perangkat",
+    text: "Lihat komponen utama seperti panel box, kamera, monitor, dan sistem portable.",
+    note: "Klik untuk melihat produk →",
+  },
+  {
+    href: "/solusi-event",
+    icon: "event",
+    title: "Solusi Event",
+    text: "Temukan penerapan CCTV untuk wedding, birthday, wisuda, seminar, gathering, dan turnamen.",
+    note: "Klik untuk melihat solusi event →",
+  },
+  {
+    href: "/live-monitoring",
+    icon: "mobile",
+    title: "Live Monitoring",
+    text: "Monitoring dari monitor operator hingga tablet atau smartphone untuk fleksibilitas tinggi.",
+    note: "Klik untuk melihat live monitoring →",
+  },
+] as const;
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <section className="hero hero-editorial">
+        <div className="hero-editorial-line"></div>
+        <div className="container hero-editorial-grid">
+          <div className="hero-editorial-copy">
+            <div className="premium-label">
+              <span className="premium-dot"></span> Rental CCTV for Exclusive Event
+            </div>
+            <h1>
+              Kontrol penuh untuk setiap{" "}
+              <span className="text-gold">momen yang tidak boleh terlewat.</span>
+            </h1>
+            <p>
+              Moment View menghadirkan sistem rental CCTV portable untuk wedding, birthday, wisuda,
+              seminar, gathering, dan turnamen. Dibangun untuk membantu penyelenggara melihat lebih
+              banyak, merespons lebih cepat, dan menjaga acara tetap terkendali.
+            </p>
+            <div className="btn-row">
+              <Link className="btn btn-primary btn-editorial" href="/kontak">
+                <WhatsAppIcon variant="white" />
+                <span>Konsultasi Event</span>
+              </Link>
+              <Link className="btn btn-light" href="/paket">
+                <Icon name="grid" />
+                <span>Lihat Pilihan Paket</span>
+              </Link>
+            </div>
+            <div className="editorial-proof-grid">
+              {proofs.map(({ icon, title, text }) => (
+                <div className="editorial-proof" key={title}>
+                  <Icon name={icon} />
+                  <div>
+                    <strong>{title}</strong>
+                    <span>{text}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="hero-editorial-visual">
+            <div className="editorial-image-card">
+              <div className="editorial-card-top">
+                <span>EVENT CONTROL</span>
+                <span className="live-indicator">
+                  <i></i> LIVE
+                </span>
+              </div>
+              <Image
+                {...images.home}
+                alt="Monitoring event wedding oleh Moment View"
+                draggable={false}
+                fetchPriority="high"
+                loading="eager"
+                sizes="(max-width: 900px) 100vw, 50vw"
+              />
+              <div className="editorial-image-overlay"></div>
+              <div className="editorial-floating editorial-floating-main">
+                <small>Moment View System</small>
+                <strong>Professional Event Monitoring</strong>
+              </div>
+              <div className="editorial-floating editorial-floating-side">
+                <small>Coverage</small>
+                <strong>Multi Area</strong>
+              </div>
+            </div>
+            <div className="editorial-index">MV / 01</div>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="container hero-client-strip">
+          {events.map((event, index) => (
+            <Fragment key={event}>
+              {index > 0 && <i></i>}
+              <span>{event}</span>
+            </Fragment>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+      <section className="page-section">
+        <div className="container">
+          <SectionHeading eyebrow="Why CCTV Matters" title="Mengapa event penting membutuhkan CCTV?">
+            Pada acara premium, momen sekali seumur hidup dan pergerakan tamu harus terdokumentasi
+            dengan baik. CCTV membantu memastikan keamanan, monitoring operasional, dan kualitas
+            pelayanan tetap optimal.
+          </SectionHeading>
+          <div className="grid-3">
+            {reasons.map(({ icon, title, text }) => (
+              <Card icon={icon} key={title} title={title}>
+                {text}
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="page-section" style={{ background: "var(--ice)" }}>
+        <div className="container">
+          <SectionHeading eyebrow="Quick Navigation" title="Jelajahi layanan Moment View">
+            Setiap halaman dirancang untuk membantu Anda memahami pilihan paket, perangkat,
+            penerapan di berbagai event, dan proses layanan kami.
+          </SectionHeading>
+          <div className="grid-4">
+            {shortcuts.map(({ href, icon, title, text, note }) => (
+              <Card href={href} icon={icon} key={href} note={note} title={title}>
+                {text}
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
